@@ -137,7 +137,6 @@ class Horizon(val hp: Int = 2, private var hits: Int = 0) : SceneObject() {
     }
 }
 
-/*
 fun main() {
     val scene = Scene()
     val atmosphere = Atmosphere()
@@ -146,4 +145,3 @@ fun main() {
     scene.addObject(pointOfLight)
     pointOfLight.shine()
 }
-*/
