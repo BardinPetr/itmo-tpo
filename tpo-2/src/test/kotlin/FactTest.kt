@@ -1,5 +1,5 @@
-import impl.DefaultFunFact
 import base.IFunFact
+import impl.DefaultFunFact
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.forAll

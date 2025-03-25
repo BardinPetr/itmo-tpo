@@ -8,5 +8,4 @@ x > 0 : (((((log_10(x) / log_3(x)) / (log_3(x) * log_2(x))) * log_5(x)) + log_10
 tan csc sec
 log_10 log_3 log_2 log_5
  */
-class MainFun {
-}
+class MainFun

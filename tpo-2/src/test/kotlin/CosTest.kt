@@ -38,8 +38,6 @@ class CosTest : FunSpec({
 
     // cos(x + 2pi) = cos(x) <=> cover any real
     test("property: periodicity") {
-        checkAll(Arb.double(-10.0, 10.0)) { x ->
-            cos.apply(2 * PI + x) shouldBe cos.apply(x).plusOrMinus(EPS)
-        }
+        assertPeriodicity(cos::apply, 2 * PI, EPS) { Arb.double(-10.0, 10.0) }
     }
 })

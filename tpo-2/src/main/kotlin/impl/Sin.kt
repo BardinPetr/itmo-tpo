@@ -2,13 +2,10 @@ package impl
 
 import base.IFunCos
 import base.IFunSin
-import kotlin.math.pow
-import kotlin.math.sqrt
+import kotlin.math.PI
 
 class DefaultFunSin(
-    private val cos: IFunCos,
-    private val terms: Int = 20
+    private val cos: IFunCos
 ) : IFunSin {
-    override fun apply(x: Double): Double =
-        sqrt(1 - cos.apply(x).pow(2))
+    override fun apply(x: Double): Double = cos.apply(PI / 2 - x)
 }

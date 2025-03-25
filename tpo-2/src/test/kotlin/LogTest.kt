@@ -13,7 +13,6 @@ import io.kotest.property.arbitrary.double
 import io.kotest.property.arbitrary.filter
 import io.kotest.property.arbitrary.positiveDouble
 import io.kotest.property.checkAll
-import org.junit.jupiter.api.assertThrows
 import kotlin.math.pow
 import kotlin.math.ln as lnTrue
 import kotlin.math.log as logTrue
@@ -21,13 +20,14 @@ import kotlin.math.log as logTrue
 private const val EPS = 1e-4
 
 class LogTest : FunSpec({
-    val mockLn = ::lnTrue
-    val log = DefaultFunLog(mockLn)
+    val log = DefaultFunLog(::lnTrue)
 
     test("invalid input tests") {
         forAll(
             row(0.0, 2.0),
             row(-1.0, 2.0),
+            row(10.0, 0.0),
+            row(10.0, -1.0),
             row(1.0, 2.0),
             row(1.0, 0.0),
             row(1.0, -1.0),

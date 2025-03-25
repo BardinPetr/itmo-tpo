@@ -6,6 +6,8 @@ import org.jetbrains.letsPlot.geom.geomLine
 import org.jetbrains.letsPlot.ggsize
 import org.jetbrains.letsPlot.intern.Plot
 import org.jetbrains.letsPlot.letsPlot
+import kotlin.math.abs
+import kotlin.math.truncate
 
 fun linspace(a: Double, b: Double, numPoints: Long): List<Double> =
     ((b - a) / (numPoints - 1))
@@ -26,3 +28,10 @@ fun plotFunction(xMin: Double, xMax: Double, points: Long, func: (Double) -> Arr
 }
 
 fun Figure.save(filename: String) = ggsave(this, filename)
+
+fun isNearZero(x: Double, delta: Double = 1e-10) = abs(x) < delta
+
+fun isApproximatelyDivisible(x: Double, divisor: Double, delta: Double = 1e-50) =
+    abs(x)
+        .div(divisor)
+        .let { isNearZero(it - truncate(it), delta) }
