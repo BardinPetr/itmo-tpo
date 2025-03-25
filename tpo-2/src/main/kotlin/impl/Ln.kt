@@ -4,7 +4,7 @@ import base.IFunLn
 import kotlin.math.pow
 
 class DefaultFunLn(
-    private val terms: Int = 100
+    private val terms: Int = 200
 ) : IFunLn {
     /**
      * https://personal.math.ubc.ca/~cbm/aands/abramowitz_and_stegun.pdf

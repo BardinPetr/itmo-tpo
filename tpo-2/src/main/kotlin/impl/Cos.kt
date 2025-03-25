@@ -10,9 +10,7 @@ class DefaultFunCos(
     private val terms: Int = 20
 ) : IFunCos {
     override fun apply(x: Double): Double =
-        x
-            .wrapMod(2 * PI)
-            .let(::baseCos)
+        baseCos(x.mod(2 * PI))
 
     private fun baseCos(x: Double) =
         (0..terms)

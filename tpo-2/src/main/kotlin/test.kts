@@ -1,29 +1,17 @@
-import java.lang.Math.pow
-import kotlin.math.pow
+import kotlin.math.sign
 
-//fun nmod(x: Double, range: Double) =
-//    x.mod(range).let { if (it < 0) it + range else it }
-//
-//println(10.0 % 4)
-//println(nmod(10.0, 4.0))
-//println()
-//println(-10.0 % 4)
-//println(nmod(-10.0, 4.0))
-//println()
-//println(-3.0 % 4)
-//println(nmod(-3.0, 4.0))
-//println()
-//println(-2.0 % 4)
-//println(nmod(-2.0, 4.0))
-//println()
-//println(-1.0 % 4)
-//println(nmod(-1.0, 4.0))
-//println()
-//
-//
+val x = 0.0
+val count = 10
+val shift = 0.1
+val isRight = true
 
-println((-1.0).pow(0))
-println((-1.0).pow(1))
-println(pow(-1.0, 0.0))
-println(pow(-1.0, 1.0))
-println(pow(-1.0, 2.0))
+
+val y =
+    generateSequence(shift) { it / 2 }
+        .take(count)
+        .map { x + if (isRight) it else -it }
+        .map { -it }
+        .zipWithNext { a, b -> sign(b - a).toInt() }
+        .all { it == -1 }
+
+println(y)
