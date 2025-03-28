@@ -46,7 +46,7 @@ class CscTest : FunSpec({
     test("property: periodicity") {
         assertPeriodicity(csc::apply, 2 * PI, EPS) {
             Arb.double(-1e3, 1e3)
-                .filter { !isApproximatelyDivisible(it, PI, 1e-1) }
+                .cut(0.0, modulo = PI, radius = 0.1)
         }
     }
 })

@@ -1,11 +1,25 @@
 package impl
 
-/*
-x <= 0 : ((((((tan(x) / csc(x)) + csc(x)) + ((sec(x) ^ 3) / sec(x))) + ((csc(x) * tan(x)) / tan(x))) / ((csc(x) + tan(x)) ^ 2)) ^ 2)
-x > 0 : (((((log_10(x) / log_3(x)) / (log_3(x) * log_2(x))) * log_5(x)) + log_10(x)) + ((log_5(x) + ln(x)) * (log_5(x) ^ 3)))
+import base.*
+import kotlin.math.pow
 
-
-tan csc sec
-log_10 log_3 log_2 log_5
- */
-class MainFun
+class DefaultMainFun(
+    val ln: IFunLn,
+    val log: IFunLog,
+    val tan: IFunTan,
+    val csc: IFunCsc,
+    val sec: IFunSec
+) : DFun {
+    override fun apply(x: Double): Double =
+        if (x <= 0)
+            ((tan.apply(x) / csc.apply(x) + csc.apply(x) + sec.apply(x)
+                .pow(3) / sec.apply(x) + csc.apply(x) * tan.apply(x) / tan.apply(x)) /
+                    ((csc.apply(x) + tan.apply(x)).pow(2))).pow(2)
+        else
+            ((log.apply(10.0, x)
+                    / log.apply(3.0, x)
+                    / (log.apply(3.0, x) * log.apply(2.0, x)))
+                    * log.apply(5.0, x)
+                    + log.apply(10.0, x)
+                    + (log.apply(5.0, x) + ln.apply(x)) * log.apply(5.0, x).pow(3))
+}

@@ -22,7 +22,7 @@ dependencies {
     implementation("org.jetbrains.lets-plot:lets-plot-image-export:4.6.1")
     implementation("space.kscience:plotlykt-core:0.7.1")
     implementation("space.kscience:plotlykt-server:0.7.1")
-
+    testImplementation("io.mockk:mockk:1.13.16")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
 }
 

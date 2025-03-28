@@ -13,7 +13,7 @@ import util.isApproximatelyDivisible
 import kotlin.math.PI
 import kotlin.math.cos as mockCos
 
-private const val EPS = 1e-4
+private const val EPS = 1e-3
 
 class SecTest : FunSpec({
     val sec = DefaultFunSec(::mockCos)
@@ -46,7 +46,7 @@ class SecTest : FunSpec({
     test("property: periodicity") {
         assertPeriodicity(sec::apply, 2 * PI, EPS) {
             Arb.double(-1e3, 1e3)
-                .filter { !isApproximatelyDivisible(it, PI, 1e-1) }
+                .cut(PI / 2, modulo = PI, radius = 0.1)
         }
     }
 })

@@ -9,7 +9,6 @@ class DefaultFunCsc(
 ) : IFunCsc {
     override fun apply(x: Double): Double {
         val c = sin.apply(x)
-        println("$x $c")
         require(!isNearZero(c)) { "Not defined in n*pi" }
         return 1 / c
     }

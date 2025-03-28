@@ -1,5 +1,4 @@
 import impl.DefaultFunCos
-import impl.DefaultFunFact
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.doubles.plusOrMinus
@@ -13,7 +12,7 @@ import kotlin.math.cos as cosTrue
 private const val EPS = 1e-10
 
 class CosTest : FunSpec({
-    val cos = DefaultFunCos(DefaultFunFact())
+    val cos = DefaultFunCos()
 
     // check basic 0->pi/2 part
     context("parametric cos test") {
