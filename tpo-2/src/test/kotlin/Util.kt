@@ -1,4 +1,5 @@
 import base.DFun
+import base.DFun2
 import io.kotest.core.test.TestScope
 import io.kotest.matchers.doubles.plusOrMinus
 import io.kotest.matchers.shouldBe
@@ -45,11 +46,21 @@ suspend fun TestScope.assertPeriodicity(
     }
 }
 
-inline fun <reified T : DFun> tableMock(table: DoubleFunTable): T =
+inline fun <reified T : DFun> tableMock(table: DoubleFunTable): T = tableMock { table.find(it) }
+
+inline fun <reified T : DFun> tableMock(table: DFun): T =
     mockk<T>()
         .apply {
             val xSlot = slot<Double>()
-            every { apply(capture(xSlot)) } answers { table.find(xSlot.captured) }
+            every { apply(capture(xSlot)) } answers { table.apply(xSlot.captured) }
+        }
+
+inline fun <reified T : DFun2> tableMock2p(table: DFun2): T =
+    mockk<T>()
+        .apply {
+            val xSlot = slot<Double>()
+            val ySlot = slot<Double>()
+            every { apply(capture(xSlot), capture(ySlot)) } answers { table.apply(xSlot.captured, ySlot.captured) }
         }
 
 fun Arb<Double>.cut(center: Double, radius: Double, modulo: Double? = null) =

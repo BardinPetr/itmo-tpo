@@ -23,23 +23,27 @@ fun plotFunction(
 ) {
     val ptsX = linspace(xMin, xMax, points)
     val ptsY = ptsX.map { func.runCatching { invoke(it) }.getOrNull() }
-    val data = mapOf(
+    val data = mutableMapOf(
         "x" to ptsX,
-        "impl" to ptsY.map { it?.get(0)?.coerceIn(-clip, clip) },
-        "true" to ptsY.map { it?.get(1)?.coerceIn(-clip, clip) }
+        "impl" to ptsY.map { it?.get(0)?.coerceIn(-clip, clip) }
     )
+    val withTrue = ptsY[0]?.size == 2
+    if (withTrue)
+        data["true"] = ptsY.map { it?.get(1)?.coerceIn(-clip, clip) }
 
-    FileWriter("$name.csv")
+    FileWriter("csv/$name.csv")
         .use { wr ->
             ptsX
                 .zip(ptsY)
                 .forEach { (x, y) -> wr.write("%.3f,%.3f\n".format(x, y?.get(0))) }
         }
 
-    val plot = letsPlot(data) +
-            geomLine(color = "red") { x = "x"; y = "true"; } +
-            geomLine { x = "x"; y = "impl"; } +
-            ggsize(1000, 600)
+    var plot = letsPlot(data) +
+            ggsize(1000, 600) +
+            geomLine { x = "x"; y = "impl"; }
+    if (withTrue)
+        plot += geomLine(color = "red") { x = "x"; y = "true"; }
+
     plot.save("$name.png")
 }
 

@@ -9,19 +9,8 @@ class DoubleFunTable(
     private val xPrecision: Int = 4
 ) {
     private val table: Map<Long, Double> =
-        this::class
-            .java
-            .classLoader
-            .getResourceAsStream(filename)
-            ?.bufferedReader()
-            ?.use { rd ->
-                rd
-                    .lines()
-                    .asSequence()
-                    .map { it.split(",") }
-                    .associate { it[0].toLong() to it[1].toDouble() }
-            }
-            ?: throw IllegalArgumentException("File not found: $filename")
+        readCSV(filename)
+            .associate { it[0].toLong() to it[1].toDouble() }
 
     fun find(x: Double) =
         x
@@ -30,3 +19,18 @@ class DoubleFunTable(
             .let(table::get)
             ?: throw IllegalArgumentException("Value not found in table: $x")
 }
+
+fun readCSV(filename: String) =
+    object {}
+        .javaClass
+        .classLoader
+        .getResourceAsStream(filename)
+        ?.bufferedReader()
+        ?.use { rd ->
+            rd
+                .lines()
+                .asSequence()
+                .map { it.split(",") }
+                .toList()
+        }
+        ?: throw IllegalArgumentException("File invalid: $filename")

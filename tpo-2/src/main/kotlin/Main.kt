@@ -16,7 +16,7 @@ fun main() {
     val log = DefaultFunLog(ln)
     val f = DefaultMainFun(ln, log, tan, csc, sec)
 
-    plotFunction(-10.0, 10.0, 1000, clip = 10.0, name = "full") { arrayOf(f.apply(it), 0.0) }
+    plotFunction(-20.0, 10.0, 1000, clip = 10.0, name = "full") { arrayOf(f.apply(it)) }
 
     plotFunction(-4 * PI, 4 * PI, 1000, name = "sin") { arrayOf(sin.apply(it), sinTrue(it)) }
 
@@ -24,9 +24,9 @@ fun main() {
 
     plotFunction(-4 * PI, 4 * PI, 1000, name = "tan") { arrayOf(tan.apply(it), tanTrue(it)) }
 
-    plotFunction(-4 * PI, 4 * PI, 1000, name = "csc") { arrayOf(csc.apply(it), 0.0) }
+    plotFunction(-4 * PI, 4 * PI, 1000, name = "csc") { arrayOf(csc.apply(it)) }
 
-    plotFunction(-4 * PI, 4 * PI, 1000, name = "sec") { arrayOf(sec.apply(it), 0.0) }
+    plotFunction(-4 * PI, 4 * PI, 1000, name = "sec") { arrayOf(sec.apply(it)) }
 
     plotFunction(1e-1, 100.0, 1000, name = "ln") { arrayOf(ln.apply(it), lnTrue(it)) }
 }

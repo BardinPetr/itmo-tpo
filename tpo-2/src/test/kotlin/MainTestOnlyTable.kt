@@ -1,6 +1,4 @@
-import base.DFun
-import base.IFunCsc
-import base.IFunSec
+import base.*
 import impl.*
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.core.spec.style.funSpec
@@ -8,34 +6,11 @@ import io.kotest.data.row
 import io.kotest.datatest.withData
 import io.kotest.matchers.doubles.plusOrMinus
 import io.kotest.matchers.shouldBe
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.double
-import mock.DoubleFunTable
-import kotlin.math.PI
-import kotlin.math.cos as cosMock
-import kotlin.math.ln as lnMock
-import kotlin.math.sin as sinMock
-import kotlin.math.tan as tanMock
-
-private const val asm1 = -4.04615
-private const val asm2 = -2.23781655
-private const val asm3 = -2.23702831
-
+import mock.DFun1SearchingFunTable
+import mock.DFun2SearchingFunTable
 
 private fun systemTest(fFactory: () -> DFun) = funSpec {
     val f = fFactory()
-    test("asymptote") {
-        // ln part
-        assertAsymptote(0.0, f::apply, isRight = true, isUp = true)
-        assertAsymptote(1.0, f::apply, isRight = false, isUp = false)
-        assertAsymptote(1.0, f::apply, isRight = true, isUp = true)
-
-        // trig part
-        assertAsymptote(asm1, f::apply, isRight = false, isUp = true)
-        assertAsymptote(asm1, f::apply, isRight = true, isUp = true)
-        assertAsymptote(asm2, f::apply, isRight = false, isUp = true)
-        assertAsymptote(asm3, f::apply, isRight = true, isUp = true)
-    }
 
     context("parametric test") {
         withData(
@@ -72,33 +47,29 @@ private fun systemTest(fFactory: () -> DFun) = funSpec {
         )
         { (x, expected) -> f.apply(x) shouldBe expected.plusOrMinus(5e-2) }
     }
-
-    test("property: periodicity") {
-        val skipRadius = 0.2
-        assertPeriodicity(f::apply, 2 * PI, 1.0, clipX = Double.NEGATIVE_INFINITY..(-1e-1)) {
-            Arb.double(-10.0, 0.0)
-                .cut(0.0, 1e-1)
-                .cut(asm1, skipRadius, modulo = 2 * PI)
-                .cut(asm2, skipRadius, modulo = 2 * PI)
-                .cut(asm3, skipRadius, modulo = 2 * PI)
-                .cut(-PI / 2, skipRadius, modulo = PI)
-        }
-    }
 }
 
-class MainTest : FunSpec({
-    val cscTable = DoubleFunTable("csc.csv")
-    val secTable = DoubleFunTable("sec.csv")
-    val cscMock: IFunCsc = tableMock<IFunCsc>(cscTable)
-    val secMock: IFunSec = tableMock<IFunSec>(secTable)
+//private val logDir: String = "/home/petr/study/tpo/tpo-2/build/tmp"
+private val logDir: String? = null
 
+private inline fun <reified T : DFun> tMock(filename: String) =
+    tableMock<T>(DFun1SearchingFunTable(filename, logModeDirectory = logDir))
+
+class MainTestOnlyTable : FunSpec({
+    val lnMock: IFunLn = tMock("mock/ln.csv")
+    val cosMock: IFunCos = tMock("mock/cos.csv")
+    val sinMock: IFunSin = tMock("mock/sin.csv")
+    val tanMock: IFunTan = tMock("mock/tan.csv")
+    val cscMock: IFunCsc = tMock("mock/csc.csv")
+    val secMock: IFunSec = tMock("mock/sec.csv")
+    val logMock: IFunLog = tableMock2p(DFun2SearchingFunTable("mock/log.csv", logModeDirectory = logDir))
     include(
         "all mock: ",
         systemTest {
             DefaultMainFun(
-                ::lnMock,
-                ::logMock,
-                ::tanMock,
+                lnMock::apply,
+                logMock::apply,
+                tanMock::apply,
                 cscMock::apply,
                 secMock::apply
             )
@@ -108,10 +79,10 @@ class MainTest : FunSpec({
     include(
         "mock L2: ",
         systemTest {
-            val ln = ::lnMock
-            val log = ::logMock
-            val cos = ::cosMock
-            val sin = ::sinMock
+            val ln = lnMock::apply
+            val log = logMock::apply
+            val cos = cosMock::apply
+            val sin = sinMock::apply
             val tan = DefaultFunTan(sin, cos)
             val csc = cscMock
             val sec = secMock
@@ -122,9 +93,9 @@ class MainTest : FunSpec({
     include(
         "mock L1: ",
         systemTest {
-            val ln = ::lnMock
+            val ln = lnMock::apply
             val log = DefaultFunLog(ln)
-            val cos = ::cosMock
+            val cos = cosMock::apply
             val sin = DefaultFunSin(cos)
             val tan = DefaultFunTan(sin, cos)
             val csc = DefaultFunCsc(sin)
