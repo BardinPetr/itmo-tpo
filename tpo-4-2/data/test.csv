@@ -1,0 +1,11 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1746618030541,658,Request,200,OK,Group 1-1,text,true,,231,159,4,4,http://localhost:30000/?token=495351441&user=-2104195675&config=3,658,0,1
+1746618030728,662,Request,200,OK,Group 1-2,text,true,,231,159,4,4,http://localhost:30000/?token=495351441&user=-2104195675&config=3,662,0,0
+1746618030927,725,Request,200,OK,Group 1-3,text,true,,231,159,3,3,http://localhost:30000/?token=495351441&user=-2104195675&config=3,725,0,1
+1746618031127,756,Request,200,OK,Group 1-4,text,true,,231,159,2,2,http://localhost:30000/?token=495351441&user=-2104195675&config=3,756,0,1
+1746618031330,681,Request,200,OK,Group 1-5,text,true,,231,159,1,1,http://localhost:30000/?token=495351441&user=-2104195675&config=3,680,0,0
+1746618046938,679,Request,200,OK,Group 1-1,text,true,,231,159,4,4,http://localhost:30000/?token=495351441&user=-2104195675&config=3,679,0,1
+1746618047137,694,Request,200,OK,Group 1-2,text,true,,231,159,4,4,http://localhost:30000/?token=495351441&user=-2104195675&config=3,694,0,0
+1746618047338,664,Request,200,OK,Group 1-3,text,true,,231,159,3,3,http://localhost:30000/?token=495351441&user=-2104195675&config=3,664,0,0
+1746618047537,719,Request,200,OK,Group 1-4,text,true,,231,159,2,2,http://localhost:30000/?token=495351441&user=-2104195675&config=3,719,0,1
+1746618047738,678,Request,200,OK,Group 1-5,text,true,,231,159,1,1,http://localhost:30000/?token=495351441&user=-2104195675&config=3,678,0,0
